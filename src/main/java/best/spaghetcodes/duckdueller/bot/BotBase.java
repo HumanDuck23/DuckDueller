@@ -43,7 +43,7 @@ public abstract class BotBase {
     public void onDamageTaken() {}
 
     /**
-     * Called when the opponent has a combo higher than `opponentComboCall`
+     * Called when the opponent has a combo higher than opponentComboCall
      */
     public void opponentCombo() {}
 
@@ -52,6 +52,19 @@ public abstract class BotBase {
      * Now you can start attacking
      */
     public void onFoundOpponent() {}
+
+    /**
+     * Called when startMessage is found in the chat
+     * <br>
+     * Default behavior is to call getOpponentEntity()
+     * and then opFoundOpponent() if the opponent is found
+     */
+    public void onRoundStart() {
+        boolean foundOpponent = getOpponentEntity();
+        if (foundOpponent) {
+            onFoundOpponent();
+        }
+    }
 
     // Base methods
     public void toggle() {
@@ -70,7 +83,7 @@ public abstract class BotBase {
     private EntityPlayer findEntity() {
         if (mc.theWorld != null) {
             for (EntityPlayer object : mc.theWorld.playerEntities) {
-                System.out.println("Current entity: " + object.getDisplayName() + " - " + object.getUniqueID());
+                System.out.println("Current entity: " + object.getDisplayName() + " - " + object.getUniqueID()); //TODO: remove this debug log
                 if (!object.getDisplayName().equals(mc.thePlayer.getDisplayName()) && this.shouldTarget(object)) {
                     return object;
                 }
