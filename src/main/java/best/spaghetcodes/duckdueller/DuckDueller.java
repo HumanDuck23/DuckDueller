@@ -1,5 +1,6 @@
 package best.spaghetcodes.duckdueller;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -9,6 +10,10 @@ public class DuckDueller {
     public static final String MOD_ID = "duckdueller";
     public static final String MOD_VERSION = "0.1.0";
     public static final String MOD_NAME = "Duck Dueller";
+
+    // References and stuff
+    public static DuckDueller INSTANCE = new DuckDueller();
+    public final Minecraft mc = Minecraft.getMinecraft();
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
