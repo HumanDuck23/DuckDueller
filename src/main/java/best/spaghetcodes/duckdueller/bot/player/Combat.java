@@ -17,6 +17,7 @@ public class Combat {
         if (DuckDueller.INSTANCE.BOT.toggled) {
             Combat.lookingInterval = lookingInterval;
             lookingLoop = true;
+            Utils.runAfterTimeout(Combat::updateLooking, lookingInterval);
         }
     }
 
