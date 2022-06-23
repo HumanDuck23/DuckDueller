@@ -27,6 +27,5 @@ public class DuckDueller {
     public void init(FMLInitializationEvent event) {
         System.out.println("Duck Dueller v" + MOD_VERSION + " is initializing...");
         MinecraftForge.EVENT_BUS.register(eventHandler);
-        MinecraftForge.EVENT_BUS.register(Combat.class);
     }
 }

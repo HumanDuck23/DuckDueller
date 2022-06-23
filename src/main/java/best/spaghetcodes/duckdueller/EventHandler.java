@@ -1,5 +1,6 @@
 package best.spaghetcodes.duckdueller;
 
+import best.spaghetcodes.duckdueller.bot.player.Combat;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -11,6 +12,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent ev) {
+        Combat.onClientTick(ev);
         if (toggleBot.isPressed()) {
             DuckDueller.INSTANCE.BOT.toggle();
         }
