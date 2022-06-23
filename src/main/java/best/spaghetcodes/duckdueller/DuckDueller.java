@@ -2,6 +2,7 @@ package best.spaghetcodes.duckdueller;
 
 import best.spaghetcodes.duckdueller.bot.BotBase;
 import best.spaghetcodes.duckdueller.bot.SumoBot;
+import best.spaghetcodes.duckdueller.bot.player.Combat;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -26,5 +27,6 @@ public class DuckDueller {
     public void init(FMLInitializationEvent event) {
         System.out.println("Duck Dueller v" + MOD_VERSION + " is initializing...");
         MinecraftForge.EVENT_BUS.register(eventHandler);
+        MinecraftForge.EVENT_BUS.register(Combat.class);
     }
 }
