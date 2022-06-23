@@ -1,6 +1,7 @@
 package best.spaghetcodes.duckdueller;
 
 import best.spaghetcodes.duckdueller.bot.BotBase;
+import best.spaghetcodes.duckdueller.bot.player.SumoBot;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +18,9 @@ public class DuckDueller {
     public static DuckDueller INSTANCE = new DuckDueller();
     public EventHandler eventHandler = new EventHandler();
     public final Minecraft mc = Minecraft.getMinecraft();
-    public BotBase BOT;
+
+    public SumoBot sumoBot = new SumoBot();
+    public BotBase BOT = sumoBot; // default bot is now sumo
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
