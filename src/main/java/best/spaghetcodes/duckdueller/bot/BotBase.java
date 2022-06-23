@@ -1,5 +1,6 @@
 package best.spaghetcodes.duckdueller.bot;
 
+import best.spaghetcodes.duckdueller.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -63,6 +64,8 @@ public abstract class BotBase {
         boolean foundOpponent = getOpponentEntity();
         if (foundOpponent) {
             onFoundOpponent();
+        } else {
+            Utils.error("Unable to find opponent!");
         }
     }
 
