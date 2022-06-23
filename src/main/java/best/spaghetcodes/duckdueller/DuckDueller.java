@@ -2,6 +2,7 @@ package best.spaghetcodes.duckdueller;
 
 import best.spaghetcodes.duckdueller.bot.BotBase;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -14,11 +15,13 @@ public class DuckDueller {
 
     // References and stuff
     public static DuckDueller INSTANCE = new DuckDueller();
+    public EventHandler eventHandler = new EventHandler();
     public final Minecraft mc = Minecraft.getMinecraft();
     public BotBase BOT;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         System.out.println("Duck Dueller v" + MOD_VERSION + " is initializing...");
+        MinecraftForge.EVENT_BUS.register(eventHandler);
     }
 }
