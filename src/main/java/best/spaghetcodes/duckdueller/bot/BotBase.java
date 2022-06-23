@@ -18,6 +18,8 @@ public abstract class BotBase {
     public boolean attacking = false;
 
     public EntityPlayer opponent;
+    public static int maxDistanceLook = 200; // from what distance to start looking at the opponent
+    public static int maxDistanceAttack = 15; // from what distance to start attacking the opponent
 
     public BotBase(String startMessage, String stopMessage, String queueCommand, int opponentComboCall) {
         this.startMessage = startMessage;
