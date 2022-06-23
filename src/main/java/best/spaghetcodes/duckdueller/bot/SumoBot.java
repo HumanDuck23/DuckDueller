@@ -1,4 +1,4 @@
-package best.spaghetcodes.duckdueller.bot.player;
+package best.spaghetcodes.duckdueller.bot;
 
 import best.spaghetcodes.duckdueller.Utils;
 import best.spaghetcodes.duckdueller.bot.BotBase;

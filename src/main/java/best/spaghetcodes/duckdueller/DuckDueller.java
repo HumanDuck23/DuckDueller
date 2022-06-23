@@ -1,7 +1,7 @@
 package best.spaghetcodes.duckdueller;
 
 import best.spaghetcodes.duckdueller.bot.BotBase;
-import best.spaghetcodes.duckdueller.bot.player.SumoBot;
+import best.spaghetcodes.duckdueller.bot.SumoBot;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
