@@ -57,16 +57,18 @@ public abstract class BotBase {
     /**
      * Called when startMessage is found in the chat
      * <br>
-     * Default behavior is to call getOpponentEntity()
-     * and then opFoundOpponent() if the opponent is found
+     * Default behavior is to wait 200ms, call getOpponentEntity()
+     * and then call opFoundOpponent() if the opponent is found
      */
     public void onRoundStart() {
-        boolean foundOpponent = getOpponentEntity();
-        if (foundOpponent) {
-            onFoundOpponent();
-        } else {
-            Utils.error("Unable to find opponent!");
-        }
+        Utils.runAfterTimeout(() -> {
+            boolean foundOpponent = getOpponentEntity();
+            if (foundOpponent) {
+                onFoundOpponent();
+            } else {
+                Utils.error("Unable to find opponent!");
+            }
+        }, 200);
     }
 
     // Base methods
