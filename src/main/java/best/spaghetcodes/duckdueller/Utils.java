@@ -5,6 +5,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -28,6 +30,29 @@ public class Utils {
         } catch (Exception e) {
             System.out.println("Error running timer after " + delay + "ms: " + e.getMessage());
         }
+    }
+
+    /**
+     * Run a function every x ms
+     * @param func Function to be run
+     * @param delay Initial delay
+     * @param interval Interval between function calls
+     * @return Timer
+     */
+    public static Timer setInterval(final VoidNoArgFuncInterface func, int delay, int interval) {
+        try {
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    func.operation();
+                }
+            }, delay, interval);
+            return timer;
+        } catch (Exception e) {
+            System.out.println("Error running interval after " + delay + "ms: " + e.getMessage());
+        }
+        return null;
     }
 
     /**
