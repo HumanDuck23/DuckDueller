@@ -23,6 +23,8 @@ public class EventHandler {
         String unformatted = event.message.getUnformattedText();
         if (unformatted.contains(DuckDueller.INSTANCE.BOT.startMessage)) {
             DuckDueller.INSTANCE.BOT.onRoundStart();
+        } else if (unformatted.contains(DuckDueller.INSTANCE.BOT.stopMessage)) {
+            DuckDueller.INSTANCE.BOT.onRoundEnd();
         }
     }
 }
