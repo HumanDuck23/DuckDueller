@@ -4,11 +4,15 @@ import best.spaghetcodes.duckdueller.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
+import java.util.Timer;
+
 /**
  * Abstract class to provide base methods for all bots
  */
 public abstract class BotBase {
     private static final Minecraft mc = Minecraft.getMinecraft();
+    private boolean calledFoundOpponent = false;
+    private Timer opponentTimer = null;
 
     public String startMessage;
     public String stopMessage;
@@ -61,14 +65,24 @@ public abstract class BotBase {
      * and then call opFoundOpponent() if the opponent is found
      */
     public void onRoundStart() {
-        Utils.runAfterTimeout(() -> {
+        opponentTimer = Utils.setInterval(() -> {
             boolean foundOpponent = getOpponentEntity();
-            if (foundOpponent) {
+            if (foundOpponent && !calledFoundOpponent) {
+                calledFoundOpponent = true;
                 onFoundOpponent();
-            } else {
+            } else if (!foundOpponent) {
                 Utils.error("Unable to find opponent!");
             }
-        }, 200);
+        }, 1500, 5000);
+    }
+
+    /**
+     * Called when stopMessage is found in the chat
+     */
+    public void onRoundEnd() {
+        opponent = null;
+        calledFoundOpponent = false;
+        opponentTimer.cancel();
     }
 
     // Base methods
@@ -88,7 +102,7 @@ public abstract class BotBase {
     private EntityPlayer findEntity() {
         if (mc.theWorld != null) {
             for (EntityPlayer object : mc.theWorld.playerEntities) {
-                System.out.println("Current entity: " + object.getDisplayName() + " - " + object.getUniqueID()); //TODO: remove this debug log
+                //System.out.println("Current entity: " + object.getDisplayName() + " - " + object.getUniqueID()); //TODO: remove this debug log
                 if (!object.getDisplayName().equals(mc.thePlayer.getDisplayName()) && this.shouldTarget(object)) {
                     return object;
                 }
