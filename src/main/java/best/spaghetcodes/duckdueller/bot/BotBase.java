@@ -60,12 +60,23 @@ public abstract class BotBase {
     public void onFoundOpponent() {}
 
     /**
+     * Called when the game starts (use this in the custom bots)
+     */
+    protected void onGameStart() {}
+
+    /**
+     * Called when the game ends (use this in the custom bots)
+     */
+    protected void onGameEnd() {}
+
+    /**
      * Called when startMessage is found in the chat
      * <br>
      * Default behavior is to wait 200ms, call getOpponentEntity()
      * and then call opFoundOpponent() if the opponent is found
      */
     public void onRoundStart() {
+        onGameStart();
         opponentTimer = Utils.setInterval(() -> {
             boolean foundOpponent = getOpponentEntity();
             if (foundOpponent && !calledFoundOpponent) {
@@ -84,7 +95,7 @@ public abstract class BotBase {
         opponent = null;
         calledFoundOpponent = false;
         opponentTimer.cancel();
-        Combat.stopLooking();
+        onGameEnd();
     }
 
     // Base methods
