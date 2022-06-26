@@ -94,7 +94,7 @@ public class Combat {
 
             // jos is contributing :OOOOOOO (no he isnt)
             if (changedPitch == -1 && !changingPitchPositive) {
-                changedPitchMax = Utils.randomIntInRange(-5, 5);
+                changedPitchMax = Utils.randomIntInRange(-1, 1);
                 changePitchBy = changedPitchMax > 0 ? 1 : -1;
                 changedPitch = 0;
                 changingPitchPositive = true;
