@@ -87,4 +87,13 @@ public class Movement {
         jumping = false;
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
     }
+
+    public static void clearAll() {
+        stopForward();
+        stopBackward();
+        stopLeft();
+        stopRight();
+        stopJumping();
+        stopSprinting();
+    }
 }
