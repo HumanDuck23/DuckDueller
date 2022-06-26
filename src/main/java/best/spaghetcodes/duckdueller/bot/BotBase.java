@@ -88,9 +88,6 @@ public abstract class BotBase {
 
     private void bakery() { // yes this is a feature
         boolean foundOpponent = getOpponentEntity();
-        try {
-            Utils.info("Opponent ID: " + opponent.getEntityId());
-        } catch (Exception ignored) {}
         if (foundOpponent && !calledFoundOpponent) {
             calledFoundOpponent = true;
             onFoundOpponent();
