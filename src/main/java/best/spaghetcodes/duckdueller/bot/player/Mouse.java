@@ -11,17 +11,14 @@ public class Mouse {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
     // Flags for external use
-    public static boolean leftClick = false;
     public static boolean rightClick = false;
 
     /**
-     * Hold left click for duration ms
-     * @param duration
+     * Left Click
      */
-    public static void leftClick(int duration) {
+    public static void leftClick() {
         if (DuckDueller.INSTANCE.BOT.toggled) {
-            lClickDown();
-            Utils.runAfterTimeout(Mouse::lClickUp, duration);
+            KeyBinding.onTick(mc.gameSettings.keyBindAttack.getKeyCode());
         }
     }
 
@@ -43,9 +40,11 @@ public class Mouse {
      */
     public static Timer leftClickAutoClicker(int delay, int cps) {
         if (DuckDueller.INSTANCE.BOT.toggled) {
-            return Utils.setInterval(() -> {
-                leftClick(1000/cps/2); // have the mouse button held for half the time
-            }, delay, 1000/cps);
+            Utils.setInterval(() -> {
+                int minDelay = 1000/cps/3;
+                int maxDelay = minDelay * 2;
+                Utils.runAfterTimeout(Mouse::leftClick, Utils.randomIntInRange(minDelay, maxDelay));
+            }, 0, 1000/cps);
         }
         return null;
     }
@@ -58,20 +57,10 @@ public class Mouse {
     public static Timer rightClickAutoClicker(int delay, int cps) {
         if (DuckDueller.INSTANCE.BOT.toggled) {
             return Utils.setInterval(() -> {
-                leftClick(1000/cps/2); // have the mouse button held for half the time
+                rightClick(1000/cps/2); // have the mouse button held for half the time
             }, delay, 1000/cps);
         }
         return null;
-    }
-
-    private static void lClickDown() {
-        leftClick = true;
-        KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), true);
-    }
-
-    private static void lClickUp() {
-        leftClick = false;
-        KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
     }
 
     private static void rClickDown() {
