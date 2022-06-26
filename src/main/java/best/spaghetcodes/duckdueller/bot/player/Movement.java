@@ -1,6 +1,7 @@
 package best.spaghetcodes.duckdueller.bot.player;
 
 import best.spaghetcodes.duckdueller.DuckDueller;
+import best.spaghetcodes.duckdueller.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 
@@ -96,6 +97,26 @@ public class Movement {
             stopRight();
             startLeft();
         }
+    }
+
+    public static void wTap(int delay) {
+        stopForward();
+        Utils.runAfterTimeout(Movement::startForward, delay);
+    }
+
+    public static void sTap(int delay) {
+        startBackward();
+        Utils.runAfterTimeout(Movement::stopBackward, delay);
+    }
+
+    public static void aTap(int delay) {
+        startLeft();
+        Utils.runAfterTimeout(Movement::stopLeft, delay);
+    }
+
+    public static void dTap(int delay) {
+        startRight();
+        Utils.runAfterTimeout(Movement::stopRight, delay);
     }
 
     public static void clearAll() {
