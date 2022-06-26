@@ -107,6 +107,9 @@ public abstract class BotBase {
         calledFoundOpponent = false;
         opponentTimer.cancel();
         onGameEnd();
+        Utils.runAfterTimeout(() -> {
+            mc.thePlayer.sendChatMessage(queueCommand);
+        }, Utils.randomIntInRange(1000, 3000));
     }
 
     // Base methods
