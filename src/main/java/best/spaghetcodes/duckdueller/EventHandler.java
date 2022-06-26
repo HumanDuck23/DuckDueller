@@ -17,6 +17,9 @@ public class EventHandler {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent ev) {
         Combat.onClientTick(ev);
+        if (DuckDueller.INSTANCE.BOT.toggled) {
+            DuckDueller.INSTANCE.BOT.onTick();
+        }
         if (toggleBot.isPressed()) {
             DuckDueller.INSTANCE.BOT.toggle();
         }
