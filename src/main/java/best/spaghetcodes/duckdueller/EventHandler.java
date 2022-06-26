@@ -22,6 +22,11 @@ public class EventHandler {
         }
         if (toggleBot.isPressed()) {
             DuckDueller.INSTANCE.BOT.toggle();
+            if (DuckDueller.INSTANCE.BOT.toggled) {
+                Utils.info("Duck Dueller has been toggled on!");
+            } else {
+                Utils.info("Duck Dueller has been toggled off!");
+            }
         }
 
         if (mc.thePlayer != null && mc.thePlayer.maxHurtTime > 0 && mc.thePlayer.hurtTime == mc.thePlayer.maxHurtTime) {
