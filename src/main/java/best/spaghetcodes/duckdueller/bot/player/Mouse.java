@@ -40,7 +40,7 @@ public class Mouse {
      */
     public static Timer leftClickAutoClicker(int delay, int cps) {
         if (DuckDueller.INSTANCE.BOT.toggled) {
-            Utils.setInterval(() -> {
+            return Utils.setInterval(() -> {
                 int minDelay = 1000/cps/3;
                 int maxDelay = minDelay * 2;
                 Utils.runAfterTimeout(Mouse::leftClick, Utils.randomIntInRange(minDelay, maxDelay));
