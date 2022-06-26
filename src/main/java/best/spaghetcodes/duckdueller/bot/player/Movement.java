@@ -145,10 +145,12 @@ public class Movement {
         stopRight();
         stopJumping();
         stopSprinting();
+        stopRandomStrafe();
     }
 
     public static void clearLeftRight() {
         stopLeft();
         stopRight();
+        stopRandomStrafe();
     }
 }
