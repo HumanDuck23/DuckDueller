@@ -125,6 +125,7 @@ public class Movement {
     public static void startRandomStrafe(int min, int max) {
         randomStrafe = true;
         randomStrafeMinMax = new int[]{min, max};
+        randomStrafeFunc();
     }
 
     public static void stopRandomStrafe() {
