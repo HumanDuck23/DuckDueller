@@ -96,8 +96,6 @@ public abstract class BotBase {
         if (foundOpponent && !calledFoundOpponent) {
             calledFoundOpponent = true;
             onFoundOpponent();
-        } else if (!foundOpponent) {
-            Utils.error("Unable to find opponent!");
         }
     }
 
