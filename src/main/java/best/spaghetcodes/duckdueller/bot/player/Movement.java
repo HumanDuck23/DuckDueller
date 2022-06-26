@@ -88,6 +88,16 @@ public class Movement {
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
     }
 
+    public static void swapLeftRight() {
+        if (left) {
+            stopLeft();
+            startRight();
+        } else {
+            stopRight();
+            startLeft();
+        }
+    }
+
     public static void clearAll() {
         stopForward();
         stopBackward();
