@@ -1,6 +1,8 @@
 package best.spaghetcodes.duckdueller;
 
 import best.spaghetcodes.duckdueller.interfaces.VoidNoArgFuncInterface;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -13,6 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * Duck Dueller utility class
  */
 public class Utils {
+    private static final Minecraft mc = Minecraft.getMinecraft();
+
     /**
      * Run a function after x ms
      * @param func - Function to be run
@@ -83,6 +87,22 @@ public class Utils {
     public static boolean randomBool() {
         Random r = new Random();
         return r.nextBoolean();
+    }
+
+    /**
+     * Calculate the distance to an entity
+     * @param entity the entity you want to calculate the distance to
+     * @return double
+     */
+    public static double getDistanceToEntity(Entity entity) {
+        if (mc.thePlayer != null && entity != null)  {
+            double deltaX = entity.posX - mc.thePlayer.posX;
+            double deltaY = entity.posY - mc.thePlayer.posY;
+            double deltaZ = entity.posZ - mc.thePlayer.posZ;
+
+            return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
+        }
+        return -1;
     }
 
     /**
