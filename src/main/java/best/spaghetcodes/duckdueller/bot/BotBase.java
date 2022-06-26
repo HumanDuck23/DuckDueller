@@ -60,6 +60,11 @@ public abstract class BotBase {
     public void onFoundOpponent() {}
 
     /**
+     * Called every tick
+     */
+    public void onTick() {}
+
+    /**
      * Called when the game starts (use this in the custom bots)
      */
     protected void onGameStart() {}
