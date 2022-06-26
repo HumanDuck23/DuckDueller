@@ -77,15 +77,26 @@ public abstract class BotBase {
      */
     public void onRoundStart() {
         onGameStart();
-        opponentTimer = Utils.setInterval(() -> {
-            boolean foundOpponent = getOpponentEntity();
-            if (foundOpponent && !calledFoundOpponent) {
-                calledFoundOpponent = true;
-                onFoundOpponent();
-            } else if (!foundOpponent) {
-                Utils.error("Unable to find opponent!");
+        Timer quickRefreshTimer = Utils.setInterval(this::bakery, 200, 50);
+        Utils.runAfterTimeout(() -> {
+            if (quickRefreshTimer != null) {
+                quickRefreshTimer.cancel();
             }
-        }, 1500, 5000);
+            opponentTimer = Utils.setInterval(this::bakery, 0, 5000);
+        }, 2000);
+    }
+
+    private void bakery() { // yes this is a feature
+        boolean foundOpponent = getOpponentEntity();
+        try {
+            Utils.info("Opponent ID: " + opponent.getEntityId());
+        } catch (Exception ignored) {}
+        if (foundOpponent && !calledFoundOpponent) {
+            calledFoundOpponent = true;
+            onFoundOpponent();
+        } else if (!foundOpponent) {
+            Utils.error("Unable to find opponent!");
+        }
     }
 
     /**
