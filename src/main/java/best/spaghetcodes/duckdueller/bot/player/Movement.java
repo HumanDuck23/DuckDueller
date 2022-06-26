@@ -127,4 +127,9 @@ public class Movement {
         stopJumping();
         stopSprinting();
     }
+
+    public static void clearLeftRight() {
+        stopLeft();
+        stopRight();
+    }
 }
