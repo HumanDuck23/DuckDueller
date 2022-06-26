@@ -1,6 +1,7 @@
 package best.spaghetcodes.duckdueller.bot;
 
 import best.spaghetcodes.duckdueller.Utils;
+import best.spaghetcodes.duckdueller.bot.player.Combat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -83,6 +84,7 @@ public abstract class BotBase {
         opponent = null;
         calledFoundOpponent = false;
         opponentTimer.cancel();
+        Combat.stopLooking();
     }
 
     // Base methods

@@ -35,6 +35,10 @@ public class Combat {
         }
     }
 
+    public static void stopLooking() {
+        Combat.lookingLoop = false;
+    }
+
     private static void updateLooking() {
         if (DuckDueller.INSTANCE.BOT.opponent != null) {
             // TODO: make smooth transitions between positions
