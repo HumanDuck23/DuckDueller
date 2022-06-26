@@ -114,7 +114,7 @@ public class Utils {
             int z = (int) mc.thePlayer.posZ;
             int xOffset = (int) Math.round(Math.sin(Math.toRadians(mc.thePlayer.rotationYaw)));
             int zOffset = (int) Math.round(Math.cos(Math.toRadians(mc.thePlayer.rotationYaw)));
-            return mc.theWorld.isAirBlock(new BlockPos(x + xOffset, y - 1, z + zOffset));
+            return mc.theWorld.isAirBlock(new BlockPos(x + xOffset, y - 2, z + zOffset));
         }
         return false;
     }
