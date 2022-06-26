@@ -5,6 +5,7 @@ import best.spaghetcodes.duckdueller.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 
+
 public class Movement {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
@@ -15,6 +16,8 @@ public class Movement {
     public static boolean right = false;
     public static boolean jumping = false;
     public static boolean sprinting = false;
+    public static boolean randomStrafe;
+    private static int[] randomStrafeMinMax;
 
     public static void startForward() {
         if (DuckDueller.INSTANCE.BOT.toggled) {
@@ -119,9 +122,20 @@ public class Movement {
         Utils.runAfterTimeout(Movement::stopRight, delay);
     }
 
-    public static void randomStrafe() {
-        if (Utils.randomBool()) startLeft();
-        else startRight();
+    public static void startRandomStrafe(int min, int max) {
+        randomStrafe = true;
+        randomStrafeMinMax = new int[]{min, max};
+    }
+
+    public static void stopRandomStrafe() {
+        randomStrafe = false;
+    }
+
+    private static void randomStrafeFunc() {
+        if (randomStrafe) {
+            swapLeftRight();
+            Utils.runAfterTimeout(Movement::randomStrafeFunc, Utils.randomIntInRange(randomStrafeMinMax[0], randomStrafeMinMax[1]));
+        }
     }
 
     public static void clearAll() {
