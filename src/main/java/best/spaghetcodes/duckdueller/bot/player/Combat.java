@@ -11,45 +11,25 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class Combat {
     private static final Minecraft mc = Minecraft.getMinecraft();
 
-    private static boolean lookingLoop = false; // used to start/stop looking at the opponent
-    private static int lookingInterval = 150;
+    private static boolean looking = false;
 
-    // player tracking system: bot rotates with a fixed speed (will stutter a bit, not constant)
-    // every tick it will increase/decrease the yaw/pitch by lookSpeed depending on the two bools
-    private static float lookSpeedYaw = 0.1f;
-    private static float lookSpeedPitch = 0.1f;
-    private static float[] rotationsNeeded;
 
     /**
      * Start looking at the opponent
-     * @param lookingInterval Time between position updates
-     * @param lookSpeed How fast the bot will look around
      */
-    public static void startLooking(int lookingInterval, float lookSpeed) {
+    public static void startLooking() {
         if (DuckDueller.INSTANCE.BOT.toggled) {
-            Combat.lookingInterval = lookingInterval;
-            Combat.lookSpeedYaw = lookSpeed;
-            Combat.lookSpeedPitch = 0.1f;
-            lookingLoop = true;
-            Utils.runAfterTimeout(Combat::updateLooking, lookingInterval);
+            looking = true;
         }
     }
 
+    /**
+     * Stop looking at the opponent
+     */
     public static void stopLooking() {
-        Combat.lookingLoop = false;
+        looking = false;
     }
 
-    private static void updateLooking() {
-        if (DuckDueller.INSTANCE.BOT.opponent != null) {
-            // TODO: make smooth transitions between positions
-            rotationsNeeded = getRotations(DuckDueller.INSTANCE.BOT.opponent, true);
-        } else {
-            Utils.error("Error looking at opponent: NULL");
-        }
-        if (lookingLoop) {
-            Utils.runAfterTimeout(Combat::updateLooking, lookingInterval);
-        }
-    }
 
     /**
      * Get the rotations needed to look at an entity
@@ -84,33 +64,10 @@ public class Combat {
     }
 
     public static void onClientTick(TickEvent.ClientTickEvent ev) {
-        if (mc.thePlayer != null && DuckDueller.INSTANCE.BOT.toggled && lookingLoop && rotationsNeeded != null && rotationsNeeded.length == 2) {
-            if (Math.abs(rotationsNeeded[0]) > 40) {
-                if (rotationsNeeded[0] > 0) {
-                    mc.thePlayer.rotationYaw += lookSpeedYaw;
-                } else {
-                    mc.thePlayer.rotationYaw -= lookSpeedYaw;
-                }
-            } else if (Math.abs(rotationsNeeded[0]) > 20) {
-                if (rotationsNeeded[0] > 0) {
-                    mc.thePlayer.rotationYaw += 2.5;
-                } else {
-                    mc.thePlayer.rotationYaw -= 2.5;
-                }
-            } else if (Math.abs(rotationsNeeded[0]) > 5) {
-                if (rotationsNeeded[0] > 0) {
-                    mc.thePlayer.rotationYaw += 1.75;
-                } else {
-                    mc.thePlayer.rotationYaw -= 1.75;
-                }
-            }
-
-
-            if (rotationsNeeded[1] > 0) {
-                mc.thePlayer.rotationPitch += lookSpeedPitch;
-            } else {
-                mc.thePlayer.rotationPitch -= lookSpeedPitch;
-            }
+        if (mc.thePlayer != null && DuckDueller.INSTANCE.BOT.toggled && looking && DuckDueller.INSTANCE.BOT.opponent != null) {
+            float[] rotations = getRotations(DuckDueller.INSTANCE.BOT.opponent, false);
+            mc.thePlayer.rotationYaw = rotations[0];
+            mc.thePlayer.rotationPitch = rotations[1];
         }
     }
 }
