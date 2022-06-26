@@ -3,6 +3,7 @@ package best.spaghetcodes.duckdueller;
 import best.spaghetcodes.duckdueller.interfaces.VoidNoArgFuncInterface;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -103,6 +104,19 @@ public class Utils {
             return Math.sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
         }
         return -1;
+    }
+
+    public static boolean isAirInFront() {
+        if (mc.thePlayer != null && mc.theWorld != null) {
+            // check if the block in front of the player is air
+            int x = (int) mc.thePlayer.posX;
+            int y = (int) mc.thePlayer.posY;
+            int z = (int) mc.thePlayer.posZ;
+            int xOffset = (int) Math.round(Math.sin(Math.toRadians(mc.thePlayer.rotationYaw)));
+            int zOffset = (int) Math.round(Math.cos(Math.toRadians(mc.thePlayer.rotationYaw)));
+            return mc.theWorld.isAirBlock(new BlockPos(x + xOffset, y - 1, z + zOffset));
+        }
+        return false;
     }
 
     /**
