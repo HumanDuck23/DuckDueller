@@ -13,6 +13,11 @@ public class Combat {
 
     private static boolean looking = false;
 
+    private static boolean changingYawPositive = false;
+    private static int changedYaw = -1;
+    private static int changedYawMax = -1;
+    private static int changeYawBy = 1;
+
 
     /**
      * Start looking at the opponent
@@ -66,8 +71,23 @@ public class Combat {
     public static void onClientTick(TickEvent.ClientTickEvent ev) {
         if (mc.thePlayer != null && DuckDueller.INSTANCE.BOT.toggled && looking && DuckDueller.INSTANCE.BOT.opponent != null) {
             float[] rotations = getRotations(DuckDueller.INSTANCE.BOT.opponent, false);
-            mc.thePlayer.rotationYaw = rotations[0];
-            mc.thePlayer.rotationPitch = rotations[1];
+
+            if (changedYaw == -1 && !changingYawPositive) {
+                changedYawMax = Utils.randomIntInRange(-5, 5);
+                changeYawBy = changedYawMax > 0 ? 1 : -1;
+                changedYaw = 0;
+                changingYawPositive = true;
+            } else if (changingYawPositive) {
+                changedYaw += changeYawBy;
+                if (Math.abs(changedYaw) >= Math.abs(changedYawMax)) {
+                    changingYawPositive = false;
+                }
+            } else {
+                changedYaw -= changeYawBy;
+            }
+
+            mc.thePlayer.rotationYaw = rotations[0] + changedYaw;
+            mc.thePlayer.rotationPitch = rotations[1]; // pitch is perfect screw you
         }
     }
 }
