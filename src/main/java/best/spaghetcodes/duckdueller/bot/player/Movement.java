@@ -119,6 +119,11 @@ public class Movement {
         Utils.runAfterTimeout(Movement::stopRight, delay);
     }
 
+    public static void randomStrafe() {
+        if (Utils.randomBool()) startLeft();
+        else startRight();
+    }
+
     public static void clearAll() {
         stopForward();
         stopBackward();
