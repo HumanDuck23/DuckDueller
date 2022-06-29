@@ -3,6 +3,8 @@ package best.spaghetcodes.duckdueller;
 import best.spaghetcodes.duckdueller.interfaces.VoidNoArgFuncInterface;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -106,16 +108,18 @@ public class Utils {
         return -1;
     }
 
-    public static boolean isAirInFront() {
-        if (mc.thePlayer != null && mc.theWorld != null) {
-            // check if the block in front of the player is air
-            int x = (int) mc.thePlayer.posX;
-            int y = (int) mc.thePlayer.posY;
-            int z = (int) mc.thePlayer.posZ;
-            int xOffset = (int) Math.round(Math.sin(Math.toRadians(mc.thePlayer.rotationYaw)));
-            int zOffset = (int) Math.round(Math.cos(Math.toRadians(mc.thePlayer.rotationYaw)));
-            return mc.theWorld.isAirBlock(new BlockPos(x + xOffset, y - 2, z + zOffset));
+    public static boolean isAirInFront(BlockPos playerPos) {
+        for(int x = -2; x < 3; ++x) {
+            for(int z = -2; z < 3; ++z) {
+                if (x != -1 || x != 0 || x != 1 || z != -1 || z != 0 || z != 1) {
+                    BlockPos pos = new BlockPos((double)(playerPos.getX() + x), 64.5, (double)(playerPos.getZ() + z));
+                    if (mc.theWorld.getBlockState(pos).getBlock() == Blocks.air) {
+                        return true;
+                    }
+                }
+            }
         }
+
         return false;
     }
 
