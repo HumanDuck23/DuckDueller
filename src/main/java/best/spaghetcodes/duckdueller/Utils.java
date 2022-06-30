@@ -114,11 +114,44 @@ public class Utils {
      */
     public static boolean isAirInFront(EntityPlayer player, double blocks) {
         // get the block in front of the player
-        BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
+        BlockPos pos = new BlockPos(player.posX, player.posY - 0.5, player.posZ);
         Vec3 lookVecScaled = new Vec3(player.getLookVec().xCoord * (blocks + 1), 0, player.getLookVec().zCoord * (blocks + 1));
 
-        for (int i = 0; i < 10; i++) {
-            Vec3 newVec = lookVecScaled.rotateYaw(i);
+        return checkAir(lookVecScaled, pos);
+    }
+
+    /**
+     * Check if the block in front of the player is air
+     * @param player
+     * @return boolean
+     */
+    public static boolean isAirOnLeft(EntityPlayer player, double blocks) {
+        // get the block in front of the player
+        BlockPos pos = new BlockPos(player.posX, player.posY - 0.5, player.posZ);
+        Vec3 lookVecScaled = new Vec3(player.getLookVec().xCoord * (blocks + 1), 0, player.getLookVec().zCoord * (blocks + 1));
+        lookVecScaled = lookVecScaled.rotateYaw(90);
+
+        return checkAir(lookVecScaled, pos);
+    }
+
+    /**
+     * Check if the block in front of the player is air
+     * @param player
+     * @return boolean
+     */
+    public static boolean isAirOnRight(EntityPlayer player, double blocks) {
+        // get the block in front of the player
+        BlockPos pos = new BlockPos(player.posX, player.posY - 0.5, player.posZ);
+        Vec3 lookVecScaled = new Vec3(player.getLookVec().xCoord * (blocks + 1), 0, player.getLookVec().zCoord * (blocks + 1));
+        lookVecScaled = lookVecScaled.rotateYaw(-90);
+
+        return checkAir(lookVecScaled, pos);
+    }
+
+    private static boolean checkAir(Vec3 lookVec, BlockPos pos) {
+        int checkRadius = 2;
+        for (int i = 0; i < checkRadius; i++) {
+            Vec3 newVec = lookVec.rotateYaw(i);
             BlockPos pos2 = pos.add(newVec.xCoord, newVec.yCoord, newVec.zCoord);
             Block block = mc.theWorld.getBlockState(pos2).getBlock();
             if (block == Blocks.air) {
@@ -126,8 +159,8 @@ public class Utils {
             }
         }
 
-        for (int i = 0; i > -10; i--) {
-            Vec3 newVec = lookVecScaled.rotateYaw(i);
+        for (int i = 0; i > -checkRadius; i--) {
+            Vec3 newVec = lookVec.rotateYaw(i);
             BlockPos pos2 = pos.add(newVec.xCoord, newVec.yCoord, newVec.zCoord);
             Block block = mc.theWorld.getBlockState(pos2).getBlock();
             if (block == Blocks.air) {
