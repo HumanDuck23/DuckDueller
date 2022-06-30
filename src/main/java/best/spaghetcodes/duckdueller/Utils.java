@@ -112,13 +112,30 @@ public class Utils {
      * @param player
      * @return boolean
      */
-    public static boolean isAirInFront(EntityPlayer player, int blocks) {
+    public static boolean isAirInFront(EntityPlayer player, double blocks) {
         // get the block in front of the player
         BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
         Vec3 lookVecScaled = new Vec3(player.getLookVec().xCoord * (blocks + 1), 0, player.getLookVec().zCoord * (blocks + 1));
-        BlockPos pos2 = pos.add(lookVecScaled.xCoord, lookVecScaled.yCoord, lookVecScaled.zCoord);
-        Block block = mc.theWorld.getBlockState(pos2).getBlock();
-        return block == Blocks.air;
+
+        for (int i = 0; i < 10; i++) {
+            Vec3 newVec = lookVecScaled.rotateYaw(i);
+            BlockPos pos2 = pos.add(newVec.xCoord, newVec.yCoord, newVec.zCoord);
+            Block block = mc.theWorld.getBlockState(pos2).getBlock();
+            if (block == Blocks.air) {
+                return true;
+            }
+        }
+
+        for (int i = 0; i > -10; i--) {
+            Vec3 newVec = lookVecScaled.rotateYaw(i);
+            BlockPos pos2 = pos.add(newVec.xCoord, newVec.yCoord, newVec.zCoord);
+            Block block = mc.theWorld.getBlockState(pos2).getBlock();
+            if (block == Blocks.air) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
