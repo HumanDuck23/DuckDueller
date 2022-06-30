@@ -11,7 +11,7 @@ import java.util.Timer;
  * Abstract class to provide base methods for all bots
  */
 public abstract class BotBase {
-    private static final Minecraft mc = Minecraft.getMinecraft();
+    protected static final Minecraft mc = Minecraft.getMinecraft();
     private boolean calledFoundOpponent = false;
     private Timer opponentTimer = null;
 
