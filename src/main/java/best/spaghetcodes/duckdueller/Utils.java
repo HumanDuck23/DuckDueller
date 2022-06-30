@@ -107,10 +107,15 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Check if the block in front of the player is air
+     * @param player
+     * @return boolean
+     */
     public static boolean isAirInFront(EntityPlayer player) {
         // get the block in front of the player
         BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
-        Vec3 lookVecScaled = new Vec3(player.getLookVec().xCoord * 2, player.getLookVec().yCoord * 2, player.getLookVec().zCoord * 2);
+        Vec3 lookVecScaled = new Vec3(player.getLookVec().xCoord * 2, 0, player.getLookVec().zCoord * 2);
         BlockPos pos2 = pos.add(lookVecScaled.xCoord, lookVecScaled.yCoord, lookVecScaled.zCoord);
         Block block = mc.theWorld.getBlockState(pos2).getBlock();
         return block == Blocks.air;
