@@ -1,13 +1,12 @@
 package best.spaghetcodes.duckdueller;
 
 import best.spaghetcodes.duckdueller.interfaces.VoidNoArgFuncInterface;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.*;
 
 import java.util.Random;
 import java.util.Timer;
@@ -108,19 +107,13 @@ public class Utils {
         return -1;
     }
 
-    public static boolean isAirInFront(BlockPos playerPos) {
-        for(int x = -2; x < 3; ++x) {
-            for(int z = -2; z < 3; ++z) {
-                if (x != -1 || x != 0 || x != 1 || z != -1 || z != 0 || z != 1) {
-                    BlockPos pos = new BlockPos((double)(playerPos.getX() + x), 64.5, (double)(playerPos.getZ() + z));
-                    if (mc.theWorld.getBlockState(pos).getBlock() == Blocks.air) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
+    public static boolean isAirInFront(EntityPlayer player) {
+        // get the block in front of the player
+        BlockPos pos = new BlockPos(player.posX, player.posY - 1, player.posZ);
+        Vec3 lookVecScaled = new Vec3(player.getLookVec().xCoord * 2, player.getLookVec().yCoord * 2, player.getLookVec().zCoord * 2);
+        BlockPos pos2 = pos.add(lookVecScaled.xCoord, lookVecScaled.yCoord, lookVecScaled.zCoord);
+        Block block = mc.theWorld.getBlockState(pos2).getBlock();
+        return block == Blocks.air;
     }
 
     /**
