@@ -159,6 +159,7 @@ public class Movement {
         stopRight();
         stopJumping();
         stopSprinting();
+        stopSneaking();
         stopRandomStrafe();
     }
 
