@@ -16,6 +16,7 @@ public class Movement {
     public static boolean right = false;
     public static boolean jumping = false;
     public static boolean sprinting = false;
+    public static boolean sneaking = false;
     public static boolean randomStrafe;
     private static int[] randomStrafeMinMax;
 
@@ -54,6 +55,13 @@ public class Movement {
         }
     }
 
+    public static void startSneaking() {
+        if (DuckDueller.INSTANCE.BOT.toggled) {
+            sneaking = true;
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), true);
+        }
+    }
+
     public static void startJumping() {
         if (DuckDueller.INSTANCE.BOT.toggled) {
             jumping = true;
@@ -84,6 +92,11 @@ public class Movement {
     public static void stopSprinting() {
         sprinting = false;
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindSprint.getKeyCode(), false);
+    }
+
+    public static void stopSneaking() {
+        sneaking = false;
+        KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), false);
     }
 
 
